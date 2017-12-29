@@ -333,7 +333,7 @@
 <p>We get all the SQL Server data type from system table <em>sys.types</em>, map the sql server data type into Mockaroo type.</p>
 <p>Below is the mapping for SQL Server data type and Mockaroo Schema Definition.<br>value in &lt;&gt; will be replaced by the column definition from system table <em>sys.columns</em>.</p>
 <p><strong>Number</strong></p>
-<p>{“name”: “&lt;ColumnName&gt;”, “null_percentage”: &lt;NullPercentage&gt;, “type”: “Number”, “min”: 1, “max”: 1000000, “decimals”: &lt;Scale&gt;,   “formula”: “” }</p>
+<p><code>{&quot;name&quot;: &quot;&amp;lt;ColumnName&amp;gt;&quot;, &quot;null_percentage&quot;: &amp;lt;NullPercentage&amp;gt;, &quot;type&quot;: &quot;Number&quot;, &quot;min&quot;: 1, &quot;max&quot;: 1000000, &quot;decimals&quot;: &amp;lt;Scale&amp;gt;,   &quot;formula&quot;: &quot;&quot; }</code></p>
 <ul>
 <li>bigint</li>
 <li>decimal</li>
@@ -347,11 +347,11 @@
 <li>money</li>
 </ul>
 <p><strong>Date</strong></p>
-<p>{“name”: “&lt;ColumnName&gt;”, “null_percentage”: &lt;NullPercentage&gt;, “type”: “Date”, “min”: “12/28/1900”, “max”: “12/27/2028”, “format”: “%-m/%-d/%Y”, “formula”: “” }</p>
+<p><code>{&quot;name&quot;: &quot;&amp;lt;ColumnName&amp;gt;&quot;, &quot;null_percentage&quot;: &amp;lt;NullPercentage&amp;gt;, &quot;type&quot;: &quot;Date&quot;, &quot;min&quot;: &quot;12/28/1900&quot;, &quot;max&quot;: &quot;12/27/2028&quot;, &quot;format&quot;: &quot;%-m/%-d/%Y&quot;, &quot;formula&quot;: &quot;&quot; }</code></p>
 <ul>
 <li>date</li>
 </ul>
-<p>{“name”: “&lt;ColumnName&gt;”, “null_percentage”: &lt;NullPercentage&gt;, “type”: “Date”, “min”: “12/28/1900”, “max”: “12/27/2028”, “format”: “%Y-%m-%d %H:%M:%S”, “formula”: “” }</p>
+<p><code>{&quot;name&quot;: &quot;&amp;lt;ColumnName&amp;gt;&quot;, &quot;null_percentage&quot;: &amp;lt;NullPercentage&amp;gt;, &quot;type&quot;: &quot;Date&quot;, &quot;min&quot;: &quot;12/28/1900&quot;, &quot;max&quot;: &quot;12/27/2028&quot;, &quot;format&quot;: &quot;%Y-%m-%d %H:%M:%S&quot;, &quot;formula&quot;: &quot;&quot; }</code></p>
 <ul>
 <li>datetime</li>
 <li>datetime2</li>
@@ -361,11 +361,11 @@
 <li>smalldatetime</li>
 </ul>
 <p><strong>Boolean</strong></p>
-<p>{“name”: “&lt;ColumnName&gt;”,”null_percentage”: 0,”type”: “Regular Expression”,”value”: “(0|1)”,”formula”: “”}</p>
+<p><code>{&quot;name&quot;: &quot;&amp;lt;ColumnName&amp;gt;&quot;,&quot;null_percentage&quot;: 0,&quot;type&quot;: &quot;Regular Expression&quot;,&quot;value&quot;: &quot;(0|1)&quot;,&quot;formula&quot;: &quot;&quot;}</code></p>
 <ul>
 <li>bit </li>
 </ul>
-<p><strong>Sentences</strong><br>{“name”: “&lt;ColumnName&gt;”,”null_percentage”: &lt;NullPercentage&gt;,”type”: “Sentences”,”min”: 1,”max”: 20,”formula”: “this[0, &lt;MaxLength&gt;]”}</p>
+<p><strong>Sentences</strong><br><code>{&quot;name&quot;: &quot;&amp;lt;ColumnName&amp;gt;&quot;,&quot;null_percentage&quot;: &amp;lt;NullPercentage&amp;gt;,&quot;type&quot;: &quot;Sentences&quot;,&quot;min&quot;: 1,&quot;max&quot;: 20,&quot;formula&quot;: &quot;this[0, &amp;lt;MaxLength&amp;gt;]&quot;}</code></p>
 <ul>
 <li>char</li>
 <li>nchar</li>
