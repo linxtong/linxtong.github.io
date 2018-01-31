@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Azure Data Factory," />
 
 
 
@@ -79,14 +79,18 @@
 
 
 
+<meta name="description" content="Load file by using wildcard file namewhen you would like to get the files by using the file name pattern, like ‘File20180101123311.txt’.Here is the tips:   Azure Blob Storage as input dataset&amp;quot;typ">
+<meta name="keywords" content="Azure Data Factory">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello Test">
-<meta property="og:url" content="http://yoursite.com/2018/01/02/Hello-Test/index.html">
+<meta property="og:title" content="Azure Data Factory Tips">
+<meta property="og:url" content="http://yoursite.com/2018/01/31/Azure-Data-Factory-Tips/index.html">
 <meta property="og:site_name" content="Ten Tips">
+<meta property="og:description" content="Load file by using wildcard file namewhen you would like to get the files by using the file name pattern, like ‘File20180101123311.txt’.Here is the tips:   Azure Blob Storage as input dataset&amp;quot;typ">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-01-02T01:59:09.133Z">
+<meta property="og:updated_time" content="2018-01-31T09:36:09.174Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello Test">
+<meta name="twitter:title" content="Azure Data Factory Tips">
+<meta name="twitter:description" content="Load file by using wildcard file namewhen you would like to get the files by using the file name pattern, like ‘File20180101123311.txt’.Here is the tips:   Azure Blob Storage as input dataset&amp;quot;typ">
 
 
 
@@ -116,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/01/02/Hello-Test/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/01/31/Azure-Data-Factory-Tips/"/>
 
 
 
 
 
-  <title>Hello Test | Ten Tips</title>
+  <title>Azure Data Factory Tips | Ten Tips</title>
   
 
 
@@ -258,7 +262,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/02/Hello-Test/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/31/Azure-Data-Factory-Tips/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ten">
@@ -275,7 +279,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello Test</h1>
+          <h1 class="post-title" itemprop="name headline">Azure Data Factory Tips</h1>
         
 
         <div class="post-meta">
@@ -287,8 +291,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-02T09:59:09+08:00">
-                2018-01-02
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-31T17:10:30+08:00">
+                2018-01-31
               </time>
             
 
@@ -325,7 +329,95 @@
       
 
       
-        
+        <h2 id="Load-file-by-using-wildcard-file-name"><a href="#Load-file-by-using-wildcard-file-name" class="headerlink" title="Load file by using wildcard file name"></a>Load file by using wildcard file name</h2><p>when you would like to get the files by using the file name pattern, like ‘File20180101123311.txt’.<br>Here is the tips:  </p>
+<h3 id="Azure-Blob-Storage-as-input-dataset"><a href="#Azure-Blob-Storage-as-input-dataset" class="headerlink" title="Azure Blob Storage as input dataset"></a>Azure Blob Storage as input dataset</h3><pre><code>&quot;typeProperties&quot;: {
+    &quot;folderPath&quot;: &quot;adftutorial/File{Year}{Month}{Day}&quot;,
+    &quot;format&quot;: {
+        &quot;type&quot;: &quot;TextFormat&quot;,
+        &quot;columnDelimiter&quot;: &quot;,&quot;
+    },
+    &quot;partitionedBy&quot;: [
+        {
+            &quot;name&quot;: &quot;Year&quot;,
+            &quot;value&quot;: {
+                &quot;type&quot;: &quot;DateTime&quot;,
+                &quot;date&quot;: &quot;SliceStart&quot;,
+                &quot;format&quot;: &quot;yyyy&quot;
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Month&quot;,
+            &quot;value&quot;: {
+                &quot;type&quot;: &quot;DateTime&quot;,
+                &quot;date&quot;: &quot;SliceStart&quot;,
+                &quot;format&quot;: &quot;MM&quot;
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Day&quot;,
+            &quot;value&quot;: {
+                &quot;type&quot;: &quot;DateTime&quot;,
+                &quot;date&quot;: &quot;SliceStart&quot;,
+                &quot;format&quot;: &quot;dd&quot;
+            }
+        }
+    ]
+},
+</code></pre><h3 id="Azure-Datalake-store-On-Promise-File-SFTP-as-input-dataset"><a href="#Azure-Datalake-store-On-Promise-File-SFTP-as-input-dataset" class="headerlink" title="Azure Datalake store / On Promise File / SFTP  as input dataset"></a>Azure Datalake store / On Promise File / SFTP  as input dataset</h3><p>Tested with Azure Data Factory version 1.0, when the input dataset has the folder structure, we cannot using the way we used for Azure Blob Storage.  </p>
+<p>Also the Property <strong>fileFilter</strong> for <strong>On Promise File / SFTP  as input dataset</strong> cannot use the system variable like {Year},{Month} as its value.  </p>
+<p>But we can match the filename like ‘File20180101.txt’</p>
+<pre><code>&quot;typeProperties&quot;: {
+    &quot;folderPath&quot;: &quot;adftutorial/{Year}/&quot;,
+    &quot;fileName&quot;: &quot;File{Year}{Month}{Day}.txt&quot;,
+    &quot;format&quot;: {
+        &quot;type&quot;: &quot;TextFormat&quot;,
+        &quot;columnDelimiter&quot;: &quot;,&quot;
+    },
+    &quot;partitionedBy&quot;: [
+        {
+            &quot;name&quot;: &quot;Year&quot;,
+            &quot;value&quot;: {
+                &quot;type&quot;: &quot;DateTime&quot;,
+                &quot;date&quot;: &quot;SliceStart&quot;,
+                &quot;format&quot;: &quot;yyyy&quot;
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Month&quot;,
+            &quot;value&quot;: {
+                &quot;type&quot;: &quot;DateTime&quot;,
+                &quot;date&quot;: &quot;SliceStart&quot;,
+                &quot;format&quot;: &quot;MM&quot;
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Day&quot;,
+            &quot;value&quot;: {
+                &quot;type&quot;: &quot;DateTime&quot;,
+                &quot;date&quot;: &quot;SliceStart&quot;,
+                &quot;format&quot;: &quot;dd&quot;
+            }
+        }
+    ]
+},  
+</code></pre><p>refer to:  <a href="https://social.msdn.microsoft.com/Forums/en-US/bacd7d7e-bd40-490c-b2c8-4fbcda67944d/dataset-dynamically-set-filename-by-offsetting-date?forum=AzureDataFactory" target="_blank" rel="noopener">https://social.msdn.microsoft.com/Forums/en-US/bacd7d7e-bd40-490c-b2c8-4fbcda67944d/dataset-dynamically-set-filename-by-offsetting-date?forum=AzureDataFactory</a> </p>
+<h2 id="Copy-Activity"><a href="#Copy-Activity" class="headerlink" title="Copy Activity"></a>Copy Activity</h2><p>Copy activity will only take the first input dataset as the source data  </p>
+<p>In the file text format, \r\n cannot be recognized, remove the <strong>row delimiter </strong>will use default[\r\n,\r,\n]</p>
+<p>The table type sqlWriterProcedureParameter’s parameter name need to be same as the tablename property of the input dataset  </p>
+<h2 id="Data-Factory-Column-Mapping"><a href="#Data-Factory-Column-Mapping" class="headerlink" title="Data Factory Column Mapping"></a>Data Factory Column Mapping</h2><p>Azure SQL Database Source Dataset can have 4 columns in the structure, but the source database table has 6 columns. Azure SQL Database Source Dataset structure map with source database table column by the column name, so the column order in structure doesn’t matter.   </p>
+<p>Column mapping supports the following scenarios: </p>
+<ul>
+<li>All columns in the source dataset structure are mapped to all columns in the sink dataset structure.</li>
+<li>A subset of the columns in the source dataset structure is mapped to all columns in the sink dataset structure.</li>
+</ul>
+<p>The following are error conditions that result in an exception: </p>
+<ul>
+<li>Either fewer columns or more columns in the “structure” of sink table than specified in the mapping.</li>
+<li>Duplicate mapping.</li>
+<li>SQL query result does not have a column name that is specified in the mapping.</li>
+</ul>
+<p>From <a href="https://docs.microsoft.com/en-us/azure/data-factory/data-factory-map-columns" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/azure/data-factory/data-factory-map-columns</a> </p>
+
       
     </div>
     
@@ -340,6 +432,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Azure-Data-Factory/" rel="tag"># Azure Data Factory</a>
+          
+        </div>
+      
 
       
       
@@ -349,8 +447,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/01/02/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2018/01/02/Hello-Test/" rel="next" title="Hello Test">
+                <i class="fa fa-chevron-left"></i> Hello Test
               </a>
             
           </div>
@@ -358,10 +456,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/01/31/Azure-Data-Factory-Tips/" rel="prev" title="Azure Data Factory Tips">
-                Azure Data Factory Tips <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -413,8 +507,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -475,6 +578,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Load-file-by-using-wildcard-file-name"><span class="nav-number">1.</span> <span class="nav-text">Load file by using wildcard file name</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Azure-Blob-Storage-as-input-dataset"><span class="nav-number">1.1.</span> <span class="nav-text">Azure Blob Storage as input dataset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Azure-Datalake-store-On-Promise-File-SFTP-as-input-dataset"><span class="nav-number">1.2.</span> <span class="nav-text">Azure Datalake store / On Promise File / SFTP  as input dataset</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Copy-Activity"><span class="nav-number">2.</span> <span class="nav-text">Copy Activity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Factory-Column-Mapping"><span class="nav-number">3.</span> <span class="nav-text">Data Factory Column Mapping</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

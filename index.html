@@ -258,6 +258,213 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/31/Azure-Data-Factory-Tips/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ten">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ten Tips">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/31/Azure-Data-Factory-Tips/" itemprop="url">Azure Data Factory Tips</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-31T17:10:30+08:00">
+                2018-01-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Load-file-by-using-wildcard-file-name"><a href="#Load-file-by-using-wildcard-file-name" class="headerlink" title="Load file by using wildcard file name"></a>Load file by using wildcard file name</h2><p>when you would like to get the files by using the file name pattern, like ‘File20180101123311.txt’.<br>Here is the tips:  </p>
+<h3 id="Azure-Blob-Storage-as-input-dataset"><a href="#Azure-Blob-Storage-as-input-dataset" class="headerlink" title="Azure Blob Storage as input dataset"></a>Azure Blob Storage as input dataset</h3><pre><code>&quot;typeProperties&quot;: {
+    &quot;folderPath&quot;: &quot;adftutorial/File{Year}{Month}{Day}&quot;,
+    &quot;format&quot;: {
+        &quot;type&quot;: &quot;TextFormat&quot;,
+        &quot;columnDelimiter&quot;: &quot;,&quot;
+    },
+    &quot;partitionedBy&quot;: [
+        {
+            &quot;name&quot;: &quot;Year&quot;,
+            &quot;value&quot;: {
+                &quot;type&quot;: &quot;DateTime&quot;,
+                &quot;date&quot;: &quot;SliceStart&quot;,
+                &quot;format&quot;: &quot;yyyy&quot;
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Month&quot;,
+            &quot;value&quot;: {
+                &quot;type&quot;: &quot;DateTime&quot;,
+                &quot;date&quot;: &quot;SliceStart&quot;,
+                &quot;format&quot;: &quot;MM&quot;
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Day&quot;,
+            &quot;value&quot;: {
+                &quot;type&quot;: &quot;DateTime&quot;,
+                &quot;date&quot;: &quot;SliceStart&quot;,
+                &quot;format&quot;: &quot;dd&quot;
+            }
+        }
+    ]
+},
+</code></pre><h3 id="Azure-Datalake-store-On-Promise-File-SFTP-as-input-dataset"><a href="#Azure-Datalake-store-On-Promise-File-SFTP-as-input-dataset" class="headerlink" title="Azure Datalake store / On Promise File / SFTP  as input dataset"></a>Azure Datalake store / On Promise File / SFTP  as input dataset</h3><p>Tested with Azure Data Factory version 1.0, when the input dataset has the folder structure, we cannot using the way we used for Azure Blob Storage.  </p>
+<p>Also the Property <strong>fileFilter</strong> for <strong>On Promise File / SFTP  as input dataset</strong> cannot use the system variable like {Year},{Month} as its value.  </p>
+<p>But we can match the filename like ‘File20180101.txt’</p>
+<pre><code>&quot;typeProperties&quot;: {
+    &quot;folderPath&quot;: &quot;adftutorial/{Year}/&quot;,
+    &quot;fileName&quot;: &quot;File{Year}{Month}{Day}.txt&quot;,
+    &quot;format&quot;: {
+        &quot;type&quot;: &quot;TextFormat&quot;,
+        &quot;columnDelimiter&quot;: &quot;,&quot;
+    },
+    &quot;partitionedBy&quot;: [
+        {
+            &quot;name&quot;: &quot;Year&quot;,
+            &quot;value&quot;: {
+                &quot;type&quot;: &quot;DateTime&quot;,
+                &quot;date&quot;: &quot;SliceStart&quot;,
+                &quot;format&quot;: &quot;yyyy&quot;
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Month&quot;,
+            &quot;value&quot;: {
+                &quot;type&quot;: &quot;DateTime&quot;,
+                &quot;date&quot;: &quot;SliceStart&quot;,
+                &quot;format&quot;: &quot;MM&quot;
+            }
+        },
+        {
+            &quot;name&quot;: &quot;Day&quot;,
+            &quot;value&quot;: {
+                &quot;type&quot;: &quot;DateTime&quot;,
+                &quot;date&quot;: &quot;SliceStart&quot;,
+                &quot;format&quot;: &quot;dd&quot;
+            }
+        }
+    ]
+},  
+</code></pre><p>refer to:  <a href="https://social.msdn.microsoft.com/Forums/en-US/bacd7d7e-bd40-490c-b2c8-4fbcda67944d/dataset-dynamically-set-filename-by-offsetting-date?forum=AzureDataFactory" target="_blank" rel="noopener">https://social.msdn.microsoft.com/Forums/en-US/bacd7d7e-bd40-490c-b2c8-4fbcda67944d/dataset-dynamically-set-filename-by-offsetting-date?forum=AzureDataFactory</a> </p>
+<h2 id="Copy-Activity"><a href="#Copy-Activity" class="headerlink" title="Copy Activity"></a>Copy Activity</h2><p>Copy activity will only take the first input dataset as the source data  </p>
+<p>In the file text format, \r\n cannot be recognized, remove the <strong>row delimiter </strong>will use default[\r\n,\r,\n]</p>
+<p>The table type sqlWriterProcedureParameter’s parameter name need to be same as the tablename property of the input dataset  </p>
+<h2 id="Data-Factory-Column-Mapping"><a href="#Data-Factory-Column-Mapping" class="headerlink" title="Data Factory Column Mapping"></a>Data Factory Column Mapping</h2><p>Azure SQL Database Source Dataset can have 4 columns in the structure, but the source database table has 6 columns. Azure SQL Database Source Dataset structure map with source database table column by the column name, so the column order in structure doesn’t matter.   </p>
+<p>Column mapping supports the following scenarios: </p>
+<ul>
+<li>All columns in the source dataset structure are mapped to all columns in the sink dataset structure.</li>
+<li>A subset of the columns in the source dataset structure is mapped to all columns in the sink dataset structure.</li>
+</ul>
+<p>The following are error conditions that result in an exception: </p>
+<ul>
+<li>Either fewer columns or more columns in the “structure” of sink table than specified in the mapping.</li>
+<li>Duplicate mapping.</li>
+<li>SQL query result does not have a column name that is specified in the mapping.</li>
+</ul>
+<p>From <a href="https://docs.microsoft.com/en-us/azure/data-factory/data-factory-map-columns" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/azure/data-factory/data-factory-map-columns</a> </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/02/Hello-Test/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1045,7 +1252,7 @@ OriginalColumn1,OriginalColumn2,OriginalColumn3
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1058,7 +1265,7 @@ OriginalColumn1,OriginalColumn2,OriginalColumn3
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
