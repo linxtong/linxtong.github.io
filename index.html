@@ -537,7 +537,22 @@
 <li>SQL query result does not have a column name that is specified in the mapping.</li>
 </ul>
 <p>From <a href="https://docs.microsoft.com/en-us/azure/data-factory/data-factory-map-columns" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/azure/data-factory/data-factory-map-columns</a> </p>
-
+<h2 id="Copy-Data-From-Access-DB-through-ODBC"><a href="#Copy-Data-From-Access-DB-through-ODBC" class="headerlink" title="Copy Data From Access DB through ODBC"></a>Copy Data From Access DB through ODBC</h2><p>– We need grant access fullcontrol on below registry HKEY_LOCAL_MACHINE\SOFTWARE\ODBC<br>– Also grant access fullcontrol on the folder where the Access DB file located.</p>
+<p>Link Service as below:  </p>
+<pre><code>{
+    &quot;$schema&quot;: &quot;http://datafactories.schema.management.azure.com/schemas/2015-09-01/Microsoft.DataFactory.LinkedService.json&quot;,
+    &quot;name&quot;: &quot;LS_Name&quot;,
+    &quot;properties&quot;: {
+        &quot;type&quot;: &quot;OnPremisesOdbc&quot;,
+        &quot;typeProperties&quot;: {
+            &quot;connectionString&quot;: &quot;Driver={Microsoft Access Driver (*.mdb, *.accdb)};Dbq=C:\\folder\\aa.mdb;&quot;,
+            &quot;gatewayName&quot;: &quot;dmg01&quot;,
+            &quot;authenticationType&quot;: &quot;Anonymous&quot;,
+            &quot;credential&quot;: &quot;&quot;
+        }
+    }
+}
+</code></pre>
           
         
       

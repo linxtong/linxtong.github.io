@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Ten Tips">
 <meta property="og:description" content="Load file by using wildcard file namewhen you would like to get the files by using the file name pattern, like ‘File20180101123311.txt’.Here is the tips:   Azure Blob Storage as input dataset&amp;quot;typ">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-01-31T09:36:09.174Z">
+<meta property="og:updated_time" content="2018-02-09T02:41:29.780Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Azure Data Factory Tips">
 <meta name="twitter:description" content="Load file by using wildcard file namewhen you would like to get the files by using the file name pattern, like ‘File20180101123311.txt’.Here is the tips:   Azure Blob Storage as input dataset&amp;quot;typ">
@@ -417,7 +417,22 @@
 <li>SQL query result does not have a column name that is specified in the mapping.</li>
 </ul>
 <p>From <a href="https://docs.microsoft.com/en-us/azure/data-factory/data-factory-map-columns" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/azure/data-factory/data-factory-map-columns</a> </p>
-
+<h2 id="Copy-Data-From-Access-DB-through-ODBC"><a href="#Copy-Data-From-Access-DB-through-ODBC" class="headerlink" title="Copy Data From Access DB through ODBC"></a>Copy Data From Access DB through ODBC</h2><p>– We need grant access fullcontrol on below registry HKEY_LOCAL_MACHINE\SOFTWARE\ODBC<br>– Also grant access fullcontrol on the folder where the Access DB file located.</p>
+<p>Link Service as below:  </p>
+<pre><code>{
+    &quot;$schema&quot;: &quot;http://datafactories.schema.management.azure.com/schemas/2015-09-01/Microsoft.DataFactory.LinkedService.json&quot;,
+    &quot;name&quot;: &quot;LS_Name&quot;,
+    &quot;properties&quot;: {
+        &quot;type&quot;: &quot;OnPremisesOdbc&quot;,
+        &quot;typeProperties&quot;: {
+            &quot;connectionString&quot;: &quot;Driver={Microsoft Access Driver (*.mdb, *.accdb)};Dbq=C:\\folder\\aa.mdb;&quot;,
+            &quot;gatewayName&quot;: &quot;dmg01&quot;,
+            &quot;authenticationType&quot;: &quot;Anonymous&quot;,
+            &quot;credential&quot;: &quot;&quot;
+        }
+    }
+}
+</code></pre>
       
     </div>
     
@@ -592,7 +607,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Load-file-by-using-wildcard-file-name"><span class="nav-number">1.</span> <span class="nav-text">Load file by using wildcard file name</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Azure-Blob-Storage-as-input-dataset"><span class="nav-number">1.1.</span> <span class="nav-text">Azure Blob Storage as input dataset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Azure-Datalake-store-On-Promise-File-SFTP-as-input-dataset"><span class="nav-number">1.2.</span> <span class="nav-text">Azure Datalake store / On Promise File / SFTP  as input dataset</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Copy-Activity"><span class="nav-number">2.</span> <span class="nav-text">Copy Activity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Factory-Column-Mapping"><span class="nav-number">3.</span> <span class="nav-text">Data Factory Column Mapping</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Load-file-by-using-wildcard-file-name"><span class="nav-number">1.</span> <span class="nav-text">Load file by using wildcard file name</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Azure-Blob-Storage-as-input-dataset"><span class="nav-number">1.1.</span> <span class="nav-text">Azure Blob Storage as input dataset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Azure-Datalake-store-On-Promise-File-SFTP-as-input-dataset"><span class="nav-number">1.2.</span> <span class="nav-text">Azure Datalake store / On Promise File / SFTP  as input dataset</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Copy-Activity"><span class="nav-number">2.</span> <span class="nav-text">Copy Activity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Factory-Column-Mapping"><span class="nav-number">3.</span> <span class="nav-text">Data Factory Column Mapping</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Copy-Data-From-Access-DB-through-ODBC"><span class="nav-number">4.</span> <span class="nav-text">Copy Data From Access DB through ODBC</span></a></li></ol></div>
             
 
           </div>
