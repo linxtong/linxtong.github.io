@@ -552,7 +552,9 @@
         }
     }
 }
-</code></pre>
+</code></pre><h2 id="Cannot-Rerun-the-activity-from-Data-Factory-Monitor"><a href="#Cannot-Rerun-the-activity-from-Data-Factory-Monitor" class="headerlink" title="Cannot Rerun the activity from Data Factory Monitor"></a>Cannot Rerun the activity from Data Factory Monitor</h2><p>Sometime we cannot rerun the activity from the Data Factory Monitor, we click rerun, then refresh the page, the activity status is still showing “Waiting”. It looks like a bug on the data factory monitor.</p>
+<p>In this case, we can go back to the Data Factory home page, go to Contents-&gt;Pipelines, select the pipeline and check the activity dataset,<br>drill down to the status of the slice of the dataset, then click run or valid to verify the status. it will start the actvity.</p>
+
           
         
       

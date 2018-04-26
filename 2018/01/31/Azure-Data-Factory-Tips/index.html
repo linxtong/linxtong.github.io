@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Ten Tips">
 <meta property="og:description" content="Load file by using wildcard file namewhen you would like to get the files by using the file name pattern, like ‘File20180101123311.txt’.Here is the tips:   Azure Blob Storage as input dataset&amp;quot;typ">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-02-09T02:41:29.780Z">
+<meta property="og:updated_time" content="2018-04-26T06:30:43.193Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Azure Data Factory Tips">
 <meta name="twitter:description" content="Load file by using wildcard file namewhen you would like to get the files by using the file name pattern, like ‘File20180101123311.txt’.Here is the tips:   Azure Blob Storage as input dataset&amp;quot;typ">
@@ -432,7 +432,9 @@
         }
     }
 }
-</code></pre>
+</code></pre><h2 id="Cannot-Rerun-the-activity-from-Data-Factory-Monitor"><a href="#Cannot-Rerun-the-activity-from-Data-Factory-Monitor" class="headerlink" title="Cannot Rerun the activity from Data Factory Monitor"></a>Cannot Rerun the activity from Data Factory Monitor</h2><p>Sometime we cannot rerun the activity from the Data Factory Monitor, we click rerun, then refresh the page, the activity status is still showing “Waiting”. It looks like a bug on the data factory monitor.</p>
+<p>In this case, we can go back to the Data Factory home page, go to Contents-&gt;Pipelines, select the pipeline and check the activity dataset,<br>drill down to the status of the slice of the dataset, then click run or valid to verify the status. it will start the actvity.</p>
+
       
     </div>
     
@@ -607,7 +609,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Load-file-by-using-wildcard-file-name"><span class="nav-number">1.</span> <span class="nav-text">Load file by using wildcard file name</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Azure-Blob-Storage-as-input-dataset"><span class="nav-number">1.1.</span> <span class="nav-text">Azure Blob Storage as input dataset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Azure-Datalake-store-On-Promise-File-SFTP-as-input-dataset"><span class="nav-number">1.2.</span> <span class="nav-text">Azure Datalake store / On Promise File / SFTP  as input dataset</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Copy-Activity"><span class="nav-number">2.</span> <span class="nav-text">Copy Activity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Factory-Column-Mapping"><span class="nav-number">3.</span> <span class="nav-text">Data Factory Column Mapping</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Copy-Data-From-Access-DB-through-ODBC"><span class="nav-number">4.</span> <span class="nav-text">Copy Data From Access DB through ODBC</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Load-file-by-using-wildcard-file-name"><span class="nav-number">1.</span> <span class="nav-text">Load file by using wildcard file name</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Azure-Blob-Storage-as-input-dataset"><span class="nav-number">1.1.</span> <span class="nav-text">Azure Blob Storage as input dataset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Azure-Datalake-store-On-Promise-File-SFTP-as-input-dataset"><span class="nav-number">1.2.</span> <span class="nav-text">Azure Datalake store / On Promise File / SFTP  as input dataset</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Copy-Activity"><span class="nav-number">2.</span> <span class="nav-text">Copy Activity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Factory-Column-Mapping"><span class="nav-number">3.</span> <span class="nav-text">Data Factory Column Mapping</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Copy-Data-From-Access-DB-through-ODBC"><span class="nav-number">4.</span> <span class="nav-text">Copy Data From Access DB through ODBC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cannot-Rerun-the-activity-from-Data-Factory-Monitor"><span class="nav-number">5.</span> <span class="nav-text">Cannot Rerun the activity from Data Factory Monitor</span></a></li></ol></div>
             
 
           </div>
