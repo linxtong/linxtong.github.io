@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Azure Data Factory," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,18 +79,17 @@
 
 
 
-<meta name="description" content="Load file by using wildcard file namewhen you would like to get the files by using the file name pattern, like ‘File20180101123311.txt’.Here is the tips:   Azure Blob Storage as input dataset&amp;quot;typ">
-<meta name="keywords" content="Azure Data Factory">
+<meta name="description" content="dynamic view intrduction sys.dm_exec_requests查询当前请求的信息 sys.dm_exec_session session创建以来所有查询请求累计的资源信息 sys.dm_exec_query_stats统计累积的Cpu time on total_worker_Time,以及 物理读，逻辑读、、、 12select * from sys.dm_exec_">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Azure Data Factory Tips">
-<meta property="og:url" content="http://yoursite.com/2018/01/31/Azure-Data-Factory-Tips/index.html">
+<meta property="og:title" content="sql server 2014+ dynamic view intrduction">
+<meta property="og:url" content="http://yoursite.com/2020/03/16/sql-server-2014-dynamic-view-intrduction/index.html">
 <meta property="og:site_name" content="Ten Tips">
-<meta property="og:description" content="Load file by using wildcard file namewhen you would like to get the files by using the file name pattern, like ‘File20180101123311.txt’.Here is the tips:   Azure Blob Storage as input dataset&amp;quot;typ">
+<meta property="og:description" content="dynamic view intrduction sys.dm_exec_requests查询当前请求的信息 sys.dm_exec_session session创建以来所有查询请求累计的资源信息 sys.dm_exec_query_stats统计累积的Cpu time on total_worker_Time,以及 物理读，逻辑读、、、 12select * from sys.dm_exec_">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2018-04-26T06:30:43.193Z">
+<meta property="og:updated_time" content="2020-03-16T08:12:42.952Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Azure Data Factory Tips">
-<meta name="twitter:description" content="Load file by using wildcard file namewhen you would like to get the files by using the file name pattern, like ‘File20180101123311.txt’.Here is the tips:   Azure Blob Storage as input dataset&amp;quot;typ">
+<meta name="twitter:title" content="sql server 2014+ dynamic view intrduction">
+<meta name="twitter:description" content="dynamic view intrduction sys.dm_exec_requests查询当前请求的信息 sys.dm_exec_session session创建以来所有查询请求累计的资源信息 sys.dm_exec_query_stats统计累积的Cpu time on total_worker_Time,以及 物理读，逻辑读、、、 12select * from sys.dm_exec_">
 
 
 
@@ -120,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/01/31/Azure-Data-Factory-Tips/"/>
+  <link rel="canonical" href="http://yoursite.com/2020/03/16/sql-server-2014-dynamic-view-intrduction/"/>
 
 
 
 
 
-  <title>Azure Data Factory Tips | Ten Tips</title>
+  <title>sql server 2014+ dynamic view intrduction | Ten Tips</title>
   
 
 
@@ -262,7 +261,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/31/Azure-Data-Factory-Tips/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/16/sql-server-2014-dynamic-view-intrduction/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Ten">
@@ -279,7 +278,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Azure Data Factory Tips</h1>
+          <h1 class="post-title" itemprop="name headline">sql server 2014+ dynamic view intrduction</h1>
         
 
         <div class="post-meta">
@@ -291,8 +290,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-31T17:10:30+08:00">
-                2018-01-31
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-16T16:12:00+08:00">
+                2020-03-16
               </time>
             
 
@@ -329,111 +328,18 @@
       
 
       
-        <h2 id="Load-file-by-using-wildcard-file-name"><a href="#Load-file-by-using-wildcard-file-name" class="headerlink" title="Load file by using wildcard file name"></a>Load file by using wildcard file name</h2><p>when you would like to get the files by using the file name pattern, like ‘File20180101123311.txt’.<br>Here is the tips:  </p>
-<h3 id="Azure-Blob-Storage-as-input-dataset"><a href="#Azure-Blob-Storage-as-input-dataset" class="headerlink" title="Azure Blob Storage as input dataset"></a>Azure Blob Storage as input dataset</h3><pre><code>&quot;typeProperties&quot;: {
-    &quot;folderPath&quot;: &quot;adftutorial/File{Year}{Month}{Day}&quot;,
-    &quot;format&quot;: {
-        &quot;type&quot;: &quot;TextFormat&quot;,
-        &quot;columnDelimiter&quot;: &quot;,&quot;
-    },
-    &quot;partitionedBy&quot;: [
-        {
-            &quot;name&quot;: &quot;Year&quot;,
-            &quot;value&quot;: {
-                &quot;type&quot;: &quot;DateTime&quot;,
-                &quot;date&quot;: &quot;SliceStart&quot;,
-                &quot;format&quot;: &quot;yyyy&quot;
-            }
-        },
-        {
-            &quot;name&quot;: &quot;Month&quot;,
-            &quot;value&quot;: {
-                &quot;type&quot;: &quot;DateTime&quot;,
-                &quot;date&quot;: &quot;SliceStart&quot;,
-                &quot;format&quot;: &quot;MM&quot;
-            }
-        },
-        {
-            &quot;name&quot;: &quot;Day&quot;,
-            &quot;value&quot;: {
-                &quot;type&quot;: &quot;DateTime&quot;,
-                &quot;date&quot;: &quot;SliceStart&quot;,
-                &quot;format&quot;: &quot;dd&quot;
-            }
-        }
-    ]
-},
-</code></pre><h3 id="Azure-Datalake-store-On-Promise-File-SFTP-as-input-dataset"><a href="#Azure-Datalake-store-On-Promise-File-SFTP-as-input-dataset" class="headerlink" title="Azure Datalake store / On Promise File / SFTP  as input dataset"></a>Azure Datalake store / On Promise File / SFTP  as input dataset</h3><p>Tested with Azure Data Factory version 1.0, when the input dataset has the folder structure, we cannot using the way we used for Azure Blob Storage.  </p>
-<p>Also the Property <strong>fileFilter</strong> for <strong>On Promise File / SFTP  as input dataset</strong> cannot use the system variable like {Year},{Month} as its value.  </p>
-<p>But we can match the filename like ‘File20180101.txt’</p>
-<pre><code>&quot;typeProperties&quot;: {
-    &quot;folderPath&quot;: &quot;adftutorial/{Year}/&quot;,
-    &quot;fileName&quot;: &quot;File{Year}{Month}{Day}.txt&quot;,
-    &quot;format&quot;: {
-        &quot;type&quot;: &quot;TextFormat&quot;,
-        &quot;columnDelimiter&quot;: &quot;,&quot;
-    },
-    &quot;partitionedBy&quot;: [
-        {
-            &quot;name&quot;: &quot;Year&quot;,
-            &quot;value&quot;: {
-                &quot;type&quot;: &quot;DateTime&quot;,
-                &quot;date&quot;: &quot;SliceStart&quot;,
-                &quot;format&quot;: &quot;yyyy&quot;
-            }
-        },
-        {
-            &quot;name&quot;: &quot;Month&quot;,
-            &quot;value&quot;: {
-                &quot;type&quot;: &quot;DateTime&quot;,
-                &quot;date&quot;: &quot;SliceStart&quot;,
-                &quot;format&quot;: &quot;MM&quot;
-            }
-        },
-        {
-            &quot;name&quot;: &quot;Day&quot;,
-            &quot;value&quot;: {
-                &quot;type&quot;: &quot;DateTime&quot;,
-                &quot;date&quot;: &quot;SliceStart&quot;,
-                &quot;format&quot;: &quot;dd&quot;
-            }
-        }
-    ]
-},  
-</code></pre><p>refer to:  <a href="https://social.msdn.microsoft.com/Forums/en-US/bacd7d7e-bd40-490c-b2c8-4fbcda67944d/dataset-dynamically-set-filename-by-offsetting-date?forum=AzureDataFactory" target="_blank" rel="noopener">https://social.msdn.microsoft.com/Forums/en-US/bacd7d7e-bd40-490c-b2c8-4fbcda67944d/dataset-dynamically-set-filename-by-offsetting-date?forum=AzureDataFactory</a> </p>
-<h2 id="Copy-Activity"><a href="#Copy-Activity" class="headerlink" title="Copy Activity"></a>Copy Activity</h2><p>Copy activity will only take the first input dataset as the source data  </p>
-<p>In the file text format, \r\n cannot be recognized, remove the <strong>row delimiter </strong>will use default[\r\n,\r,\n]</p>
-<p>The table type sqlWriterProcedureParameter’s parameter name need to be same as the tablename property of the input dataset  </p>
-<h2 id="Data-Factory-Column-Mapping"><a href="#Data-Factory-Column-Mapping" class="headerlink" title="Data Factory Column Mapping"></a>Data Factory Column Mapping</h2><p>Azure SQL Database Source Dataset can have 4 columns in the structure, but the source database table has 6 columns. Azure SQL Database Source Dataset structure map with source database table column by the column name, so the column order in structure doesn’t matter.   </p>
-<p>Column mapping supports the following scenarios: </p>
-<ul>
-<li>All columns in the source dataset structure are mapped to all columns in the sink dataset structure.</li>
-<li>A subset of the columns in the source dataset structure is mapped to all columns in the sink dataset structure.</li>
+        <h3 id="dynamic-view-intrduction"><a href="#dynamic-view-intrduction" class="headerlink" title="dynamic view intrduction"></a>dynamic view intrduction</h3><ul>
+<li>sys.dm_exec_requests<br>查询当前请求的信息</li>
+<li>sys.dm_exec_session session<br>创建以来所有查询请求累计的资源信息</li>
+<li><p>sys.dm_exec_query_stats<br>统计累积的Cpu time on total_worker_Time,以及 物理读，逻辑读、、、</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> sys.dm_exec_query_stats </span><br><span class="line"><span class="keyword">cross</span> <span class="keyword">apply</span> sys.dm_exec_sql_text(sql_handle)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查询成本最高的前20 的query</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> TOP <span class="number">20</span> </span><br><span class="line"><span class="keyword">SUM</span> (query_stats.total_worker_time)/<span class="keyword">SUM</span>(query_stats.execution_count) </span><br><span class="line"><span class="keyword">AS</span> avg_cpu_time ,<span class="keyword">MIN</span> (query_stats.statement_text) <span class="keyword">AS</span> statement_text </span><br><span class="line"><span class="keyword">FROM</span> </span><br><span class="line">(<span class="keyword">SELECT</span> qs.* , </span><br><span class="line"><span class="keyword">SUBSTRING</span> (st.text, (qs.statement_start_offset /<span class="number">2</span>) + <span class="number">1</span>, </span><br><span class="line">( (<span class="keyword">CASE</span> statement_end_offset </span><br><span class="line"><span class="keyword">WHEN</span> <span class="number">-1</span> <span class="keyword">THEN</span> <span class="keyword">DATALENGTH</span>(ST.text) </span><br><span class="line"><span class="keyword">ELSE</span> qs.statement_end_offset <span class="keyword">END</span> </span><br><span class="line">- qs.statement_start_offset) /<span class="number">2</span>) + <span class="number">1</span>) <span class="keyword">AS</span> statement_text </span><br><span class="line"><span class="keyword">FROM</span> sys.dm_exec_query_stats qs </span><br><span class="line"><span class="keyword">CROSS</span> <span class="keyword">APPLY</span> sys.dm_exec_sql_text (qs.sql_handle) <span class="keyword">AS</span> st) <span class="keyword">AS</span> query_stats </span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> query_stats.query_hash </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> avg_cpu_time <span class="keyword">DESC</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查询当前执行成本最高的前20 的query</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> top <span class="number">20</span> * <span class="keyword">from</span> sys.dm_exec_requests</span><br><span class="line"><span class="keyword">cross</span> <span class="keyword">apply</span> sys.dm_exec_sql_text(sql_handle)</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> total_elapsed_time <span class="keyword">desc</span></span><br></pre></td></tr></table></figure></li>
 </ul>
-<p>The following are error conditions that result in an exception: </p>
-<ul>
-<li>Either fewer columns or more columns in the “structure” of sink table than specified in the mapping.</li>
-<li>Duplicate mapping.</li>
-<li>SQL query result does not have a column name that is specified in the mapping.</li>
-</ul>
-<p>From <a href="https://docs.microsoft.com/en-us/azure/data-factory/data-factory-map-columns" target="_blank" rel="noopener">https://docs.microsoft.com/en-us/azure/data-factory/data-factory-map-columns</a> </p>
-<h2 id="Copy-Data-From-Access-DB-through-ODBC"><a href="#Copy-Data-From-Access-DB-through-ODBC" class="headerlink" title="Copy Data From Access DB through ODBC"></a>Copy Data From Access DB through ODBC</h2><p>– We need grant access fullcontrol on below registry HKEY_LOCAL_MACHINE\SOFTWARE\ODBC<br>– Also grant access fullcontrol on the folder where the Access DB file located.</p>
-<p>Link Service as below:  </p>
-<pre><code>{
-    &quot;$schema&quot;: &quot;http://datafactories.schema.management.azure.com/schemas/2015-09-01/Microsoft.DataFactory.LinkedService.json&quot;,
-    &quot;name&quot;: &quot;LS_Name&quot;,
-    &quot;properties&quot;: {
-        &quot;type&quot;: &quot;OnPremisesOdbc&quot;,
-        &quot;typeProperties&quot;: {
-            &quot;connectionString&quot;: &quot;Driver={Microsoft Access Driver (*.mdb, *.accdb)};Dbq=C:\\folder\\aa.mdb;&quot;,
-            &quot;gatewayName&quot;: &quot;dmg01&quot;,
-            &quot;authenticationType&quot;: &quot;Anonymous&quot;,
-            &quot;credential&quot;: &quot;&quot;
-        }
-    }
-}
-</code></pre><h2 id="Cannot-Rerun-the-activity-from-Data-Factory-Monitor"><a href="#Cannot-Rerun-the-activity-from-Data-Factory-Monitor" class="headerlink" title="Cannot Rerun the activity from Data Factory Monitor"></a>Cannot Rerun the activity from Data Factory Monitor</h2><p>Sometime we cannot rerun the activity from the Data Factory Monitor, we click rerun, then refresh the page, the activity status is still showing “Waiting”. It looks like a bug on the data factory monitor.</p>
-<p>In this case, we can go back to the Data Factory home page, go to Contents-&gt;Pipelines, select the pipeline and check the activity dataset,<br>drill down to the status of the slice of the dataset, then click run or valid to verify the status. it will start the actvity.</p>
 
       
     </div>
@@ -449,12 +355,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/Azure-Data-Factory/" rel="tag"># Azure Data Factory</a>
-          
-        </div>
-      
 
       
       
@@ -464,8 +364,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/12/29/Generate-Testing-Data-With-Mockaroo/" rel="next" title="Generate Testing Data With Mockaroo">
-                <i class="fa fa-chevron-left"></i> Generate Testing Data With Mockaroo
+              <a href="/2018/12/25/Azure-Data-Factory-V2-Tips/" rel="next" title="Azure Data Factory V2 Tips">
+                <i class="fa fa-chevron-left"></i> Azure Data Factory V2 Tips
               </a>
             
           </div>
@@ -473,10 +373,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/02/09/Azure-SQL-Database/" rel="prev" title="Azure SQL Database">
-                Azure SQL Database <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -609,7 +505,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Load-file-by-using-wildcard-file-name"><span class="nav-number">1.</span> <span class="nav-text">Load file by using wildcard file name</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Azure-Blob-Storage-as-input-dataset"><span class="nav-number">1.1.</span> <span class="nav-text">Azure Blob Storage as input dataset</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Azure-Datalake-store-On-Promise-File-SFTP-as-input-dataset"><span class="nav-number">1.2.</span> <span class="nav-text">Azure Datalake store / On Promise File / SFTP  as input dataset</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Copy-Activity"><span class="nav-number">2.</span> <span class="nav-text">Copy Activity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Factory-Column-Mapping"><span class="nav-number">3.</span> <span class="nav-text">Data Factory Column Mapping</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Copy-Data-From-Access-DB-through-ODBC"><span class="nav-number">4.</span> <span class="nav-text">Copy Data From Access DB through ODBC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cannot-Rerun-the-activity-from-Data-Factory-Monitor"><span class="nav-number">5.</span> <span class="nav-text">Cannot Rerun the activity from Data Factory Monitor</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#dynamic-view-intrduction"><span class="nav-number">1.</span> <span class="nav-text">dynamic view intrduction</span></a></li></ol></div>
             
 
           </div>

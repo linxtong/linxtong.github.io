@@ -258,6 +258,137 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/16/sql-server-2014-dynamic-view-intrduction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Ten">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ten Tips">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/16/sql-server-2014-dynamic-view-intrduction/" itemprop="url">sql server 2014+ dynamic view intrduction</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-16T16:12:00+08:00">
+                2020-03-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="dynamic-view-intrduction"><a href="#dynamic-view-intrduction" class="headerlink" title="dynamic view intrduction"></a>dynamic view intrduction</h3><ul>
+<li>sys.dm_exec_requests<br>查询当前请求的信息</li>
+<li>sys.dm_exec_session session<br>创建以来所有查询请求累计的资源信息</li>
+<li><p>sys.dm_exec_query_stats<br>统计累积的Cpu time on total_worker_Time,以及 物理读，逻辑读、、、</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> sys.dm_exec_query_stats </span><br><span class="line"><span class="keyword">cross</span> <span class="keyword">apply</span> sys.dm_exec_sql_text(sql_handle)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查询成本最高的前20 的query</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> TOP <span class="number">20</span> </span><br><span class="line"><span class="keyword">SUM</span> (query_stats.total_worker_time)/<span class="keyword">SUM</span>(query_stats.execution_count) </span><br><span class="line"><span class="keyword">AS</span> avg_cpu_time ,<span class="keyword">MIN</span> (query_stats.statement_text) <span class="keyword">AS</span> statement_text </span><br><span class="line"><span class="keyword">FROM</span> </span><br><span class="line">(<span class="keyword">SELECT</span> qs.* , </span><br><span class="line"><span class="keyword">SUBSTRING</span> (st.text, (qs.statement_start_offset /<span class="number">2</span>) + <span class="number">1</span>, </span><br><span class="line">( (<span class="keyword">CASE</span> statement_end_offset </span><br><span class="line"><span class="keyword">WHEN</span> <span class="number">-1</span> <span class="keyword">THEN</span> <span class="keyword">DATALENGTH</span>(ST.text) </span><br><span class="line"><span class="keyword">ELSE</span> qs.statement_end_offset <span class="keyword">END</span> </span><br><span class="line">- qs.statement_start_offset) /<span class="number">2</span>) + <span class="number">1</span>) <span class="keyword">AS</span> statement_text </span><br><span class="line"><span class="keyword">FROM</span> sys.dm_exec_query_stats qs </span><br><span class="line"><span class="keyword">CROSS</span> <span class="keyword">APPLY</span> sys.dm_exec_sql_text (qs.sql_handle) <span class="keyword">AS</span> st) <span class="keyword">AS</span> query_stats </span><br><span class="line"><span class="keyword">GROUP</span> <span class="keyword">BY</span> query_stats.query_hash </span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> avg_cpu_time <span class="keyword">DESC</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查询当前执行成本最高的前20 的query</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> top <span class="number">20</span> * <span class="keyword">from</span> sys.dm_exec_requests</span><br><span class="line"><span class="keyword">cross</span> <span class="keyword">apply</span> sys.dm_exec_sql_text(sql_handle)</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> total_elapsed_time <span class="keyword">desc</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/25/Azure-Data-Factory-V2-Tips/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1270,7 +1401,7 @@ OriginalColumn1,OriginalColumn2,OriginalColumn3
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1330,7 +1461,7 @@ OriginalColumn1,OriginalColumn2,OriginalColumn3
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
